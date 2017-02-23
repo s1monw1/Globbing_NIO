@@ -1,0 +1,3 @@
+This project shows some features of Java's NIO.2
+
+It provides an API which allows to find Files in a Directory recursively using "Glob" patterns.
