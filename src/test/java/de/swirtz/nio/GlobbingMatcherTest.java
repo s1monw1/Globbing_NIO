@@ -20,24 +20,26 @@ import static org.junit.Assert.assertTrue;
  * created on 22.02.2017.
  */
 public class GlobbingMatcherTest {
-    private static final Path RES_BASE = Paths.get("src/main/resources");
+    private static final Path RES_BASE = Paths.get("src/test/resources");
     private static final Path ENV = RES_BASE.resolve("./globbing").normalize();
 
     @BeforeClass
     public static void init() throws IOException {
-        Files.walkFileTree(ENV, new SimpleFileVisitor<Path>() {
-            @Override
-            public FileVisitResult visitFile(Path file, BasicFileAttributes attrs) throws IOException {
-                Files.delete(file);
-                return FileVisitResult.CONTINUE;
-            }
+        if (Files.exists(ENV)){
+            Files.walkFileTree(ENV, new SimpleFileVisitor<Path>() {
+                @Override
+                public FileVisitResult visitFile(Path file, BasicFileAttributes attrs) throws IOException {
+                    Files.delete(file);
+                    return FileVisitResult.CONTINUE;
+                }
 
-            @Override
-            public FileVisitResult postVisitDirectory(Path dir, IOException exc) throws IOException {
-                Files.delete(dir);
-                return FileVisitResult.CONTINUE;
-            }
-        });
+                @Override
+                public FileVisitResult postVisitDirectory(Path dir, IOException exc) throws IOException {
+                    Files.delete(dir);
+                    return FileVisitResult.CONTINUE;
+                }
+            });
+        }
         setupEnvironment();
     }
 
